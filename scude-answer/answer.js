@@ -1,20 +1,21 @@
 var answer = function(){
 
+	var workForm = $("form[name='workForm']");
+
 	//获取答案
 	var getAnswer = function(){
 		var currentPosition = $(".currentPosition").text();
-		$.get(currentPosition.concat(".json"),null,function(result){
-			console.log(result);
+		$.getJSON("https://rawgit.com/yumemor/subentry/gh-pages/scude-answer/"+currentPosition+".json",null,function(result){
+			handleAnswer(result);
 		},function(){
 			alert("获取答案失败！");
 		})
 	}
 
 	//处理答案
-	var handleAnswer = function(json){
-		var evalData = eval("(" + json + ")");
-		var selectData = eval("(" + evalData.select + ")");
-		var ifData = eval("(" + evalData.if + ")");
+	var handleAnswer = function(data){
+		var selectData = eval("(" + data.select + ")");
+		var ifData = eval("(" + data.if + ")");
 
 		var inputArr = $("ol[type='A']>li>input");	
 		if(selectData.length == inputArr.length){
@@ -42,6 +43,11 @@ var answer = function(){
 				$(i).find("input[value='"+index+"']")[0].checked = "checked";					
 			})
 		}
+
+		alert("试卷已经全部完成！点击确定自动提交答案...");
+
+		workForm.submit();
+
 	}
 
 	return {
