@@ -5,7 +5,9 @@ var answer = function(){
 	//获取答案
 	var getAnswer = function(){
 		var currentPosition = $(".currentPosition").text();
+		console.log("获取答案中...")
 		$.getJSON("https://rawgit.com/yumemor/subentry/gh-pages/scude-answer/"+currentPosition+".json",null,function(result){
+			console.log("答案获取成功，开始自动填写...")
 			handleAnswer(result);
 		},function(){
 			alert("获取答案失败！");
@@ -44,7 +46,7 @@ var answer = function(){
 			})
 		}
 
-		alert("试卷已经全部完成！点击确定自动提交答案...");
+		alert("试卷已经全部完成！点击确定自动提交试卷...");
 
 		workForm.submit();
 
